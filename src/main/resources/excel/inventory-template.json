@@ -1,0 +1,27 @@
+{
+  "desc": "盘点报表",
+  "columns": [
+    {
+      "title": "创建时间",
+      "value": "#fmt.formatDate1(createTime)",
+      "width": 30
+    },
+    {
+      "title": "门店名称",
+      "value": "inventoryShopName"
+    },
+    {
+      "title": "盘点日期",
+      "value": "#fmt.formatDate1(inventoryTime)",
+    },
+    {
+      "title": "盘点人",
+      "value": "inventoryPeopleName",
+      "width": 25
+    },
+    {
+      "title": "盘点状态",
+      "value": "inventoryStatusType.msg"
+    }
+  ]
+}

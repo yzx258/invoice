@@ -1,0 +1,60 @@
+{
+  "desc": "发票订单模板",
+  "columns": [
+    {
+      "title": "单据编号",
+      "value": "invoiceNo",
+      "width": 30
+    },
+    {
+      "title": "订单编号",
+      "value": "orderNo"
+    },
+    {
+      "title": "客户姓名",
+      "value": "customerName"
+    },
+    {
+      "title": "发票类型",
+      "value": "invoiceType.name",
+      "width": 25
+    },
+    {
+      "title": "开票状态",
+      "value": "invoiceStatus.name"
+    },
+    {
+      "title": "发票代码",
+      "value": "invoiceCode"
+    },
+    {
+      "title": "发票号码",
+      "value": "invoiceNumber"
+    },
+    {
+      "title": "不含税金额",
+      "value": "taxAmount?.subtract(tax)"
+    },
+    {
+      "title": "税率",
+      "value": "#fmt.formatNumber(taxRate,'#.##%')",
+      "width": 10
+    },
+    {
+      "title": "税额",
+      "value": "tax"
+    },
+    {
+      "title": "含税金额",
+      "value": "#fmt.formatNumber(taxAmount,'#.00')"
+    },
+    {
+      "title": "单据创建时间",
+      "value": "#fmt.formatDate(createTime)"
+    },
+    {
+      "title": "单据完成时间",
+      "value": "#fmt.formatDate(createTime)"
+    }
+  ]
+}
