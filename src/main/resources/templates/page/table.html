@@ -10,7 +10,41 @@
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
 </head>
 <body>
+<div class="demoTable" style="margin-top:10px">
+    <div class="layui-row layui-col-space1">
+        <div class="layui-col-md3">
+            <div class="grid-demo grid-demo-bg1">
+                <input placeholder="编号/名称/公司名称" style="width: 96%;float: right" class="layui-input" name="id" id="demoReload" autocomplete="off">
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="grid-demo grid-demo-bg1">
+                <button class="layui-btn" data-type="reload">搜索</button>
+            </div>
+        </div>
+<!--        <div class="layui-col-md3">-->
+<!--            <div class="grid-demo grid-demo-bg1">-->
+<!--                <input placeholder="编号/名称/公司名称" style="width: 80%;margin: auto" class="layui-input" name="id" id="demoReload" autocomplete="off">-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="layui-col-md3">-->
+<!--            <div class="grid-demo">-->
+<!--                <input style="width: 80%;margin: auto" class="layui-input" name="id" id="demoReload1" autocomplete="off">-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="layui-col-md3">-->
+<!--            <div class="grid-demo grid-demo-bg1">-->
+<!--                <input style="width: 80%;margin: auto" class="layui-input" name="id" id="demoReload2" autocomplete="off">-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="layui-col-md3">-->
+<!--            <div class="grid-demo grid-demo-bg1">-->
+<!--                <input style="width: 80%;margin: auto" class="layui-input" name="id" id="demoReload3" autocomplete="off">-->
+<!--            </div>-->
+<!--        </div>-->
+    </div>
 
+</div>
 <table class="layui-hide" id="test" lay-filter="test"></table>
 
 <script type="text/html" id="toolbarDemo">
@@ -36,39 +70,67 @@
 
         table.render({
             elem: '#test'
-            , url: '/data/data.json'
+            , url: '/list.do'
             , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             , defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
                 title: '提示'
                 , layEvent: 'LAYTABLE_TIPS'
                 , icon: 'layui-icon-tips'
             }]
+            ,done: function(res, curr, count){
+                //如果是异步请求数据方式，res即为你接口返回的信息。
+                //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                console.log(res);
+                //得到当前页码
+                console.log(curr);
+                //得到数据总量
+                console.log(count);
+            }
             , title: '用户数据表'
+            ,limit: 10
+            ,page: {
+                curr: 1 //重新从第 1 页开始
+            }
             , cols:
                 [
                     [
                         {type: 'checkbox', fixed: 'left'}
-                        , {field: 'id', title: 'ID', width: 80, fixed: 'left', unresize: true, sort: true}
-                        , {field: 'username', title: '用户名', width: 120, edit: 'text'}
-                        , {
-                        field: 'email', title: '邮箱', width: 150, edit: 'text', templet: function (res) {
-                            return '<em>' + res.email + '</em>'
-                        }
-                    }
-                        , {field: 'sex', title: '性别', width: 80, edit: 'text', sort: true}
-                        , {field: 'city', title: '城市', width: 100}
-                        , {field: 'sign', title: '签名'}
-                        , {field: 'experience', title: '积分', width: 80, sort: true}
-                        , {field: 'ip', title: 'IP', width: 120}
-                        , {field: 'logins', title: '登入次数', width: 100, sort: true}
-                        , {field: 'joinTime', title: '加入时间', width: 120}
+                        , {field: 'id', title: 'ID', fixed: 'left', unresize: true, sort: true}
+                        , {field: 'kpNo', title: '编号',}
+                        , {field: 'time', title: '创建时间',}
+                        , {field: 'kpName', title: '名称',}
+                        , {field: 'kpGs', title: '公司名称',}
+                        , {field: 'status', title: '状态', sort: true}
                         , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
                     ]
                 ]
             , page: true
+            ,id: 'testReload'
         });
 
-        //头工具栏事件
+        // 添加搜索时间监听
+        var $ = layui.$, active = {
+            reload: function(){
+                var demoReload = $('#demoReload');
+                console.log("id:"+demoReload.val())
+                //执行重载
+                table.reload('testReload', {
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                    ,where: {
+                        id: demoReload.val()
+                    }
+                }, 'data');
+            }
+        };
+
+        $('.demoTable .layui-btn').on('click', function(){
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
+        // 头工具栏事件
         table.on('toolbar(test)', function (obj) {
             var checkStatus = table.checkStatus(obj.config.id);
             switch (obj.event) {

@@ -1,31 +1,38 @@
 package com.rbgt.kp.invoice.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.rbgt.kp.invoice.base.dto.community.CommunityListDto;
 import com.rbgt.kp.invoice.base.dto.community.Resp;
+import com.rbgt.kp.invoice.config.resoponse.ResponseResult;
 import com.rbgt.kp.invoice.config.resoponse.target.BaseResponse;
 import io.swagger.annotations.Api;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.http.HttpRequest;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author 俞春旺
- * @program: JueWei
- * @date 2021-02-13 17:29:45
+ * @company： 厦门宜车时代信息技术有限公司
+ * @copyright： Copyright (C), 2021
+ * @author： yucw
+ * @date： 2021/2/19 10:05
+ * @version： 1.0
  * @description: 开票相关接口
  */
-@BaseResponse
-@Api(value = "/purchase", tags = "角色接口")
+@Api(value = "/kp", tags = "开票接口")
 @RestController
-public class LoginController {
+public class InvoiceController {
 
-
-    @GetMapping("/lists.do")
-    public List<CommunityListDto> list(){
+    @ResponseBody
+    @RequestMapping("/list.do")
+    public Resp list(@RequestParam(name = "id", required = false) String id,int page,int limit){
+        System.out.println(id);
+        System.out.println(page);
+        System.out.println(limit);
         Resp resp = new Resp();
         List<CommunityListDto> list = new ArrayList<>();
         CommunityListDto d1 = new CommunityListDto();
@@ -60,7 +67,7 @@ public class LoginController {
         resp.setData(list);
         resp.setMsg("success");
         resp.setCount("5");
-        return list;
+        return resp;
     }
 
 }
