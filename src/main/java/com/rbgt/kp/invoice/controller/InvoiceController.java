@@ -36,6 +36,7 @@ public class InvoiceController {
         Resp resp = new Resp();
         List<CommunityListDto> list = new ArrayList<>();
         CommunityListDto d1 = new CommunityListDto();
+        d1.setId("kp0000001");
         d1.setKpNo("KP000001");
         d1.setKpGs("厦门小黑公司");
         d1.setKpName("进货开票");
@@ -44,6 +45,7 @@ public class InvoiceController {
         d1.setTime("2021年02月14日");
 
         CommunityListDto d2 = new CommunityListDto();
+        d2.setId("kp0000002");
         d2.setKpNo("KP000002");
         d2.setKpGs("厦门小白公司");
         d2.setKpName("调货开票");
@@ -52,6 +54,7 @@ public class InvoiceController {
         d2.setTime("2021年02月14日");
 
         CommunityListDto d3 = new CommunityListDto();
+        d3.setId("kp0000003");
         d3.setKpNo("KP000003");
         d3.setKpGs("厦门小白公司");
         d3.setKpName("货运开票");
@@ -66,7 +69,7 @@ public class InvoiceController {
         resp.setCode(0);
         resp.setData(list);
         resp.setMsg("success");
-        resp.setCount("5");
+        resp.setCount("15");
         return resp;
     }
 

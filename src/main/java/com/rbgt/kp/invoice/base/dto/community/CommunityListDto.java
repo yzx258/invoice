@@ -11,6 +11,8 @@ import lombok.Data;
 @Data
 public class CommunityListDto {
 
+    private String id;
+
     private String kpNo;
 
     private String kpName;
